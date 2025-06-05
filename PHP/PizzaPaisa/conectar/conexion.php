@@ -2,11 +2,11 @@
 
     class Conexion{
 
-        private $servidor = "pizzapaisa-db";
+        private $servidor = "127.0.0.1";
 
         private $usuario = "root";
         
-        private $password = "123456";
+        private $password = "";
 
         private $db = "pizzapaisa";
 
