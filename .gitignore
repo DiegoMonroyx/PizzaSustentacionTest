@@ -1,6 +1,7 @@
 # Laravel & PHP (en subcarpeta)
 Laravel/pizzaPaisaAP/vendor/
-Laravel/pizzaPaisaAP/public/storage/
+Laravel/pizzaPaisaAP/public
+Laravel/pizzaPaisaAP/storage/
 Laravel/pizzaPaisaAP/storage/*.key
 Laravel/pizzaPaisaAP/.env
 
