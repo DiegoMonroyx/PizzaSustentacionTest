@@ -1,0 +1,28 @@
+# Laravel & PHP
+/vendor
+/public/storage
+/storage/*.key
+/.phpunit.cache
+.phpunit.result.cache
+
+# Archivos sensibles
+.env
+.env.backup
+.env.production
+auth.json
+
+# Node (Angular / Laravel Mix)
+/node_modules
+/public/build
+/public/hot
+npm-debug.log
+yarn-error.log
+
+# IDEs y herramientas
+/.idea
+/.vscode
+/.fleet
+
+# Homestead (si lo usas)
+Homestead.yaml
+Homestead.json
