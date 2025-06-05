@@ -29,6 +29,9 @@ yarn-error.log
 # =====================
 # Angular/Vite específicos
 # =====================
+# =====================
+# Angular/Vite específicos
+# =====================
 Angular/laPizza/.angular/
 Angular/laPizza/dist/
 Angular/laPizza/out-tsc/
