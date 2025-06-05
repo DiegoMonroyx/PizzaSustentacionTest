@@ -29,9 +29,9 @@ yarn-error.log
 # =====================
 # Angular/Vite específicos
 # =====================
-.angular/
-dist/
-out-tsc/
+Angular/laPizza/.angular/
+Angular/laPizza/dist/
+Angular/laPizza/out-tsc/
 .tmp/
 **/.angular/cache/
 **/vite/
