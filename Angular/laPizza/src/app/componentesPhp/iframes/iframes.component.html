@@ -1,0 +1,17 @@
+<div class="iframe-container" style="width: 100%; height: 111vh;">
+    <iframe 
+      *ngIf="iframeUrl" 
+      [src]="iframeUrl | safeUrl" 
+      width="100%" 
+      height="100%" 
+      style="border: none;" 
+      title="Contenido del iframe"
+      scrolling="yes">
+    </iframe>
+  </div>
+  
+  <!-- Mostrar un mensaje si no se carga ninguna URL -->
+  <div *ngIf="!iframeUrl" class="alert alert-info">
+    Seleccione un enlace para cargar contenido.
+  </div>
+

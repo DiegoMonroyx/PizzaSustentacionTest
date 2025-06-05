@@ -1,0 +1,192 @@
+<div
+  class="container-sm mt-4 p-3 bg-light rounded shadow-sm"
+  style="max-width: 500px"
+>
+  <h2 class="text-center mb-3 text-primary">Registro de Usuario</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-2">
+      <label for="UsuarioDocumento" class="form-label text-secondary small"
+        >Documento</label
+      >
+      <input
+        type="number"
+        class="form-control rounded-pill form-control-sm"
+        id="UsuarioDocumento"
+        formControlName="UsuarioDocumento"
+        placeholder="Ingrese su documento"
+      />
+      <div
+        *ngIf="
+          form.get('UsuarioDocumento')?.invalid &&
+          (form.get('UsuarioDocumento')?.touched ||
+            form.get('UsuarioDocumento')?.dirty)
+        "
+        class="alert alert-danger mt-2"
+      >
+        El numero de documento es obligatorio
+      </div>
+    </div>
+    <div class="mb-2">
+      <label for="UsuarioTelefono" class="form-label text-secondary small"
+        >Teléfono</label
+      >
+      <input
+        type="number"
+        class="form-control rounded-pill form-control-sm"
+        id="UsuarioTelefono"
+        formControlName="UsuarioTelefono"
+        placeholder="Ingrese su teléfono"
+      />
+      <div
+        *ngIf="
+          form.get('UsuarioTelefono')?.invalid &&
+          (form.get('UsuarioTelefono')?.touched ||
+            form.get('UsuarioTelefono')?.dirty)
+        "
+        class="alert alert-danger mt-2"
+      >
+        El numero de telefono es obligatorio
+      </div>
+    </div>
+    <div class="mb-2">
+      <label for="Contrasena" class="form-label text-secondary small"
+        >Contraseña</label
+      >
+      <input
+        type="password"
+        class="form-control rounded-pill form-control-sm"
+        id="Contrasena"
+        formControlName="Contrasena"
+        placeholder="Ingrese su contraseña"
+      />
+      <div
+        *ngIf="
+          form.get('Contrasena')?.invalid &&
+          (form.get('Contrasena')?.touched || form.get('Contrasena')?.dirty)
+        "
+        class="alert alert-danger mt-2"
+      >
+        La contraseña es obligatoria
+      </div>
+    </div>
+    <div class="mb-2">
+      <label for="Correo" class="form-label text-secondary small">Correo</label>
+      <input
+        type="email"
+        class="form-control rounded-pill form-control-sm"
+        id="Correo"
+        formControlName="Correo"
+        placeholder="Ingrese su correo electrónico"
+      />
+      <div
+        *ngIf="
+          form.get('Correo')?.invalid &&
+          (form.get('Correo')?.touched || form.get('Correo')?.dirty)
+        "
+        class="alert alert-danger mt-2"
+      >
+        El correo es obligatorio
+      </div>
+    </div>
+    <div class="mb-2">
+      <label for="UsuarioPrimerNombre" class="form-label text-secondary small"
+        >Nombre</label
+      >
+      <input
+        type="text"
+        class="form-control rounded-pill form-control-sm"
+        id="UsuarioPrimerNombre"
+        formControlName="UsuarioPrimerNombre"
+        placeholder="Ingrese su nombre"
+      />
+      <div
+        *ngIf="
+          form.get('UsuarioPrimerNombre')?.invalid &&
+          (form.get('UsuarioPrimerNombre')?.touched ||
+            form.get('UsuarioPrimerNombre')?.dirty)
+        "
+        class="alert alert-danger mt-2"
+      >
+        El nombre es obligatorio
+      </div>
+    </div>
+    <div class="mb-2">
+      <label for="UsuarioApellido" class="form-label text-secondary small"
+        >Apellido</label
+      >
+      <input
+        type="text"
+        class="form-control rounded-pill form-control-sm"
+        id="UsuarioApellido"
+        formControlName="UsuarioApellido"
+        placeholder="Ingrese su apellido"
+      />
+      <div
+        *ngIf="
+          form.get('UsuarioApellido')?.invalid &&
+          (form.get('UsuarioApellido')?.touched ||
+            form.get('UsuarioApellido')?.dirty)
+        "
+        class="alert alert-danger mt-2"
+      >
+        El apellido es obligatorio
+      </div>
+    </div>
+    <div class="mb-2">
+      <label for="idTipoDocumento" class="form-label text-secondary small"
+        >Tipo Documento</label
+      >
+      <select
+        id="idTipoDocumento"
+        formControlName="idTipoDocumento"
+        class="form-control rounded-pill form-control-sm"
+      >
+        <option value="" disabled selected>
+          Selecciona el tipo de documento
+        </option>
+        <option
+          *ngFor="let tipo of tiposDocumento"
+          [value]="tipo.idTipoDocumento"
+        >
+          {{ tipo.tipoDocumento }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          form.get('idTipoDocumento')?.invalid &&
+          (form.get('idTipoDocumento')?.touched ||
+            form.get('idTipoDocumento')?.dirty)
+        "
+        class="text-danger small"
+      ></div>
+    </div>
+    <div class="mb-2">
+      <label for="idTipoUsuario" class="form-label text-secondary small"
+        >Tipo Usuario</label
+      >
+      <select
+        id="idTipoUsuario"
+        formControlName="idTipoUsuario"
+        class="form-control rounded-pill form-control-sm"
+      >
+        <option [value]="tiposUsuario[0].idTipoUsuario">
+          {{ tiposUsuario[0].tipoUsuario }}
+        </option>
+      </select>
+    </div>
+    <div class="d-flex justify-content-between mt-3">
+      <button
+        type="submit"
+        class="btn btn-primary px-3 py-1 rounded-pill shadow-sm"
+        [disabled]="form.invalid"
+      >
+        Guardar
+      </button>
+      <a
+        href="/inicio-sesion"
+        class="btn btn-outline-primary px-3 py-1 rounded-pill shadow-sm"
+        >Iniciar Sesión</a
+      >
+    </div>
+  </form>
+</div>

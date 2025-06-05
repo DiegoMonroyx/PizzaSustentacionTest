@@ -1,0 +1,34 @@
+<div class="container-sm mt-4">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h3 class="titulo mb-3">Ingredientes</h3>
+
+        <button type="button" class="btn btn-primary mb-3" (click)="addItem()">Agregar Ingrediente</button>
+
+        <div formArrayName="items">
+            <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i"
+                class="row align-items-center mb-2 ingrediente-item">
+                <div class="col-md-5 mb-2 mb-md-0">
+                    <select formControlName="idIngrediente" class="form-select" required>
+                        <option value="" disabled selected>Seleccione un ingrediente</option>
+                        <option *ngFor="let ing of ingredientes" [value]="ing.id">
+                            {{ ing.nombre }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mb-2 mb-md-0">
+                    <input type="number" formControlName="CantidadComprada" class="form-control" placeholder="Cantidad"
+                        min="1" required />
+                </div>
+
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-danger w-100" (click)="removeItem(i)">
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-4">Registrar Orden</button>
+    </form>
+</div>

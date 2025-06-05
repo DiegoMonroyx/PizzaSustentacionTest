@@ -1,0 +1,89 @@
+/* Contenedor principal */
+.contenedor1 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Ajusta los elementos en múltiples líneas si es necesario */
+    gap: 20px; /* Espacio entre elementos */
+  }
+  
+  /* Contenedor para la tabla */
+  .contenedor2 {
+    width: 100%;
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  /* Estilo para las tarjetas o contenedores secundarios */
+  #cliente {
+    width: 85%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    
+}
+  
+  @media (max-width: 768px) {
+    .clientes {
+      width: 90%;
+      margin-top: 20px;
+    }
+  }
+  
+  /* Tabla */
+ 
+  .title{
+    color: black;
+  }
+  .cabezata th {
+    background-color:#198754;
+    color: rgb(10, 10, 10);
+    padding: 12px 15px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+  
+  .filaprin {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  #cliente td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  #cliente tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Botón */
+  .botoncli {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  #boton-cli {
+    background-color: blueviolet;
+    border: none;
+    width: 100px;
+    height: 30px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #boton-cli:hover {
+    background-color: darkviolet;
+  }

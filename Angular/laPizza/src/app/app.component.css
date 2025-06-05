@@ -1,0 +1,19 @@
+.app-container {
+  display: flex;
+  flex-direction: column;  /* Organiza los elementos en columna */
+  min-height: 100vh;        /* Asegura que el contenedor ocupe al menos el 100% de la altura de la ventana */
+}
+
+app-disboard{
+  flex: 1;
+  height: 100%;
+}
+.app-principal {
+  flex-grow: 1;                 /* Este contenedor ocupa el espacio restante */
+  
+  /* No es necesario justificar a la izquierda si no es necesario, puedes ajustar esto */
+}
+
+app-pie {
+  margin-top: auto;  /* Empuja el pie al fondo */
+}

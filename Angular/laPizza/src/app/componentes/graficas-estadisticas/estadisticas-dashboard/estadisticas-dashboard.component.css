@@ -1,0 +1,90 @@
+:host {
+  display: block;
+  padding: 2rem;
+  background-color: #121212; /* fondo oscuro tipo dashboard */
+  color: #ffffff; /* texto claro */
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Título del dashboard */
+.dashboard-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Grid de tarjetas resumen */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.card .value {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.charts-grid-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem; /* Ajusta el espacio entre gráficos */
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.chart-wrapper {
+  background-color: #1f2937; /* Fondo oscuro */
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+  height: 300px; /* Puedes ajustarlo según lo que necesites */
+}
+
+/*.chart-wrapper:nth-child(1) .chart-container,
+.chart-wrapper:nth-child(2) .chart-container {
+  height: 350px; /* Nueva altura solo para estos dos */
+/* } 
+*/
+
+@media (min-width: 1420px) {
+.chart-wrapper:nth-child(1) .chart-container,
+.chart-wrapper:nth-child(2) .chart-container {
+  height: 350px; /* Altura solo cuando el ancho es 1420px o más */
+}
+}
+
+@media (min-width: 1630px) {
+.chart-wrapper:nth-child(1) .chart-container,
+.chart-wrapper:nth-child(2) .chart-container {
+  height: 380px; /* Altura solo cuando el ancho es 1420px o más */
+}
+.chart-container {
+  height: 350px; /* Puedes ajustarlo según lo que necesites */
+}
+}
+
+@media (max-width: 768px) {
+  .charts-grid-row {
+    grid-template-columns: 1fr;
+  }
+}
+/*.chart-container canvas {
+  /* o 350px */
+ /* width:450px !important;
+}*/

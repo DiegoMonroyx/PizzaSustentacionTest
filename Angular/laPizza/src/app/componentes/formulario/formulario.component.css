@@ -1,0 +1,33 @@
+.container-sm {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+h2 {
+    font-weight: bold;
+}
+
+label {
+    font-weight: 500;
+}
+
+input.form-control {
+    border: 1px solid #ccc;
+    transition: all 0.3s ease-in-out;
+}
+
+input.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button.btn-primary {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+button.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}

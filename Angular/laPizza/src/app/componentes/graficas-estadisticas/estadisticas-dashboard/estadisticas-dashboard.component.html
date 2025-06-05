@@ -1,0 +1,64 @@
+<div class="dashboard-container">
+  <h2>Resumen de Estadísticas</h2>
+
+  <div class="stats-grid">
+    <div class="card">
+      <p class="value">{{ totalOrdenes }}</p>
+      <h3>Total Órdenes</h3>
+    </div>
+    <div class="card">
+      <p class="value">{{ totalPorciones }}</p>
+      <h3>Total Porciones</h3>
+    </div>
+    <div class="card">
+      <p class="value">{{ promedioPorciones }}</p>
+      <h3>Prom. Porciones/Orden</h3>
+    </div>
+    <div class="card">
+      <p class="value">${{ promedioValor }}</p>
+      <h3>Prom. Valor/Orden</h3>
+    </div>
+    <div class="card">
+      <p class="value">${{ totalIngresos }}</p>
+      <h3>Total Ingresos</h3>
+    </div>
+  </div>
+</div> <!-- ✅ cierre correcto del dashboard-container -->
+
+<div class="charts-grid-row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <!-- Órdenes por Día -->
+  <div class="chart-wrapper">
+    <h3 class="text-lg font-semibold mb-2 text-center">Órdenes por Día</h3>
+    <div class="chart-container">
+      <canvas *ngIf="ordenesPorDiaChart" baseChart
+              [data]="ordenesPorDiaChart"
+              [type]="'bar'"
+              [options]="ordenesPorDiaOptions">
+      </canvas>
+    </div>
+  </div>
+
+  <!-- Ventas por Sabor -->
+  <div class="chart-wrapper">
+    <h3 class="text-lg font-semibold mb-2 text-center">Ventas por Sabor</h3>
+    <div class="chart-container">
+      <canvas *ngIf="ventasPorSaborChart" baseChart
+              [data]="ventasPorSaborChart"
+              [type]="'bar'"
+              [options]="ventasPorSaborOptions">
+      </canvas>
+    </div>
+  </div>
+
+  <!-- Órdenes por Mes (ocupa 2 columnas) -->
+  <div class="chart-wrapper span-2">
+    <h3 class="text-lg font-semibold mb-2 text-center">Órdenes por Mes</h3>
+    <div class="chart-container">
+      <canvas *ngIf="ordenesPorMesChart" baseChart
+              [data]="ordenesPorMesChart"
+              [type]="'line'"
+              [options]="ordenesPorMesOptions">
+      </canvas>
+    </div>
+  </div>
+</div>

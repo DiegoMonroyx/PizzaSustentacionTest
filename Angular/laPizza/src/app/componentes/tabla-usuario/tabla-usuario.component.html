@@ -1,0 +1,132 @@
+<div class="contenedor2">
+  <h1 class="title" style="color: white;" >Clientes Registrados</h1>
+  <table id="cliente">
+    <thead class="cabezata">
+      <tr class="filaprin">
+        <th>Documento</th>
+        <th>Teléfono</th>
+        <th>Correo</th>
+        <th>Primer Nombre</th>
+        <th>Apellido</th>
+        <th>Tipo Documento</th>
+        <th>Tipo Usuario</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuario">
+        <td>{{ usuario.UsuarioDocumento }}</td>
+        <td>{{ usuario.UsuarioTelefono }}</td>
+        <td>{{ usuario.Correo }}</td>
+        <td>{{ usuario.UsuarioPrimerNombre }}</td>
+        <td>{{ usuario.UsuarioApellido }}</td>
+        <td>{{ obtenerTipoDocumento(usuario.idTipoDocumento) }}</td>
+        <td>{{ obtenerTipoUsuario(usuario.idTipoUsuario) }}</td>
+        <td>
+          <button class="btn btn-sm btn-primary editM" (click)="editarUsuario(usuario)" data-bs-toggle="modal" data-bs-target="#editar">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button class="btn btn-sm btn-danger elimn"  (click)="eliminarUsuario(usuario)" data-bs-toggle="modal" data-bs-target="#botoneliminar">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal fade" id="botoneliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="" method="post" [formGroup]="formularioEliminar " (ngSubmit)="guardarElimin()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Confirmar Eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body" style="color: black;">
+          <div class="mb-3">
+            <label for="UsuarioDocumento4" class="form-label">Número de Documento</label>
+            <input 
+              type="text" 
+              
+              id="UsuarioDocumento4" 
+              class="form-control" 
+              formControlName="UsuarioDocumento"
+              placeholder="Ingrese el número de documento" 
+              required 
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" name="elimina" class="btn btn-danger">Confirmar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- Modal para editar -->
+<div class="modal fade" id="editar" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true" style="color: black;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="formularioEdicion" (ngSubmit)="guardarEdicion()">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarLabel">Editar Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body row g-3">
+          <!-- Campos del formulario -->
+          <input type="hidden" id="UsuarioDocumento" class="form-control" formControlName="UsuarioDocumento" readonly>
+          <div class="col-12">
+            <label for="UsuarioDocumento" class="form-label">Número de Documento</label>
+            
+            <input type="text" id="UsuarioDocumento" class="form-control" formControlName="UsuarioDocumento1" readonly>
+          </div>
+          <div class="col-12">
+            <label for="UsuarioTelefono" class="form-label">Número de Teléfono</label>
+            <input type="text" id="UsuarioTelefono" class="form-control" formControlName="UsuarioTelefono" placeholder="Ingrese el número de teléfono">
+          </div>
+          <div class="col-md-6">
+            <label for="Contrasena" class="form-label">Contraseña</label>
+            <input type="password" id="Contrasena" class="form-control" formControlName="Contrasena" readonly>
+          </div>
+          <div class="col-md-6">
+            <label for="Correo" class="form-label">Correo Electrónico</label>
+            <input type="email" id="Correo" class="form-control" formControlName="Correo" placeholder="Ingrese el correo">
+          </div>
+          <div class="col-md-6">
+            <label for="UsuarioPrimerNombre" class="form-label">Primer Nombre</label>
+            <input type="text" id="UsuarioPrimerNombre" class="form-control" formControlName="UsuarioPrimerNombre" required>
+          </div>
+          <div class="col-md-6">
+            <label for="UsuarioApellido" class="form-label">Apellidos</label>
+            <input type="text" id="UsuarioApellido" class="form-control" formControlName="UsuarioApellido" required>
+          </div>
+          <div class="col-md-6">
+            <label for="idTipoDocumento" class="form-label">Tipo de Documento</label>
+            <select class="form-select" id="idTipoDocumento" formControlName="idTipoDocumento" required>
+              <option selected disabled value="">Elije...</option>
+              <option value="1">Cédula de Ciudadanía</option>
+              <option value="2">Cédula de Extranjería</option>
+              <option value="3">Número de Pasaporte</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="idTipoUsuario" class="form-label">Tipo de Usuario</label>
+            <select class="form-select" id="idTipoUsuario" formControlName="idTipoUsuario" required>
+              <option selected disabled value="">Elije...</option>
+              <option value="1">Gerente</option>
+              <option value="2">Encargado de reservas</option>
+              <option value="3">Cliente</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Modificar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

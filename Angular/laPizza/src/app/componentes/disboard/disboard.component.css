@@ -1,0 +1,43 @@
+
+.mt-7 {
+    margin-top: 11.1rem; /* paginas boostrap modficacion */
+  }
+  
+
+ 
+
+ #imagencarru{
+    height: 100%;
+ }
+ section{
+   
+ }
+ #carouselExampleIndicators{
+    overflow: hidden;
+    display: flex;             /* Hacer que el contenedor del carrusel sea un flexbox */
+  justify-content: center;   /* Centrar el carrusel horizontalmente */
+  align-items: center; 
+    border-radius: 5px;
+    height: 65%;
+ }
+ 
+ .artDescripcion{
+    background-color: black;
+    width: 65%;
+    height: 600px;
+    margin-top: 3em;
+    border-radius: 5px;
+    margin-bottom: 3em;
+ }
+ @media (max-height: 572px) {
+    .artDescripcion{
+        background-color: black;
+        width: 64%;
+        height: 550px;
+        margin-top: 3em;
+        border-radius: 5px;
+
+ }
+}
+
+  

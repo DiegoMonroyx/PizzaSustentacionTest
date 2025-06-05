@@ -1,0 +1,42 @@
+<div class="container mt-5 p-4 bg-light rounded shadow" style="max-width: 400px;">
+  <h2 class="text-center mb-4 text-primary">Inicio de Sesión</h2>
+  <form [formGroup]="form" (ngSubmit)="onLogin()">
+      <div class="mb-4">
+          <label for="UsuarioDocumento" class="form-label text-secondary">Documento</label>
+          <input 
+              type="text" 
+              class="form-control rounded-pill" 
+              id="UsuarioDocumento" 
+              formControlName="UsuarioDocumento" 
+              placeholder="Ingrese su documento">
+      </div>
+      <div class="mb-4">
+          <label for="Correo" class="form-label text-secondary">Correo</label>
+          <input 
+              type="email" 
+              class="form-control rounded-pill" 
+              id="Correo" 
+              formControlName="Correo" 
+              placeholder="Ingrese su correo electrónico">
+      </div>
+      <div class="mb-4">
+          <label for="Contrasena" class="form-label text-secondary">Contraseña</label>
+          <input 
+              type="password" 
+              class="form-control rounded-pill" 
+              id="Contrasena" 
+              formControlName="Contrasena" 
+              placeholder="Ingrese su contraseña">
+      </div>
+      <div class="text-center">
+          <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+              Iniciar Sesión
+          </button>
+      </div>
+      <div class="text-center mt-3">
+    <button type="button" class="btn btn-outline-secondary px-4 py-2 rounded-pill shadow-sm" (click)="irARegistro()">
+        Registrarse
+    </button>
+</div>
+  </form>
+</div>

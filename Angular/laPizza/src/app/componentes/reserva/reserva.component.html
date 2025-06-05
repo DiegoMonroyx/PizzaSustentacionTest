@@ -1,0 +1,122 @@
+<div class="container-sm">
+    <form [formGroup]="form">
+  
+      <h2 class="mt-4">Selecciona la Fecha y Hora de Entrega</h2>
+  
+      <!-- Fecha -->
+      <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha:</label>
+        <input
+          id="fecha"
+          type="date"
+          class="form-control"
+          formControlName="fecha"
+          [min]="minFecha"
+          [max]="maxFecha" />
+      </div>
+  
+      <!-- Hora -->
+      <div class="mb-3">
+        <label for="hora" class="form-label">Hora:</label>
+        <select
+          id="hora"
+          class="form-control"
+          formControlName="hora">
+          <option value="" disabled>— Selecciona hora —</option>
+          <option *ngFor="let h of horasDisponibles" [value]="h">
+            {{ h }}
+          </option>
+        </select>
+      </div>
+  
+      <h2 class="mt-5 text-center">Menú de Pizzas</h2>
+      <div formArrayName="pizzas">
+        <div class="row row-cols-5 mt-4">
+          <div
+            *ngFor="let grp of pizzas.controls; let i = index"
+            [formGroupName]="i"
+            class="col mb-3 d-flex">
+            <div class="card w-100">
+              <img
+                [src]="'../../Imagenes/' + pizzasDisponibles[i].id + '.jpg'"
+                class="card-img-top"
+                style="height: 60%;"
+                alt="{{ pizzasDisponibles[i].nombre }}"
+                onerror="this.onerror=null; this.src='../../Imagenes/' + this.getAttribute('data-id') + '.jpeg'"
+                [attr.data-id]="pizzasDisponibles[i].id">
+              <div class="card-body">
+                <h5 class="card-title text-center">
+                  {{ pizzasDisponibles[i].nombre }}
+                </h5>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="NumeroPorciones"
+                  min="0"
+                  placeholder="Porciones">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Botón para abrir el modal -->
+      <div class="text-center mt-3 mb-3">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#confirmacionModal"
+          (click)="prepararResumen()">
+          Reservar
+        </button>
+      </div>
+  
+    </form>
+  </div>
+  
+  <!-- Modal de Confirmación -->
+  <div
+    class="modal fade"
+    id="confirmacionModal"
+    tabindex="-1"
+    aria-labelledby="confirmacionModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="confirmacionModalLabel">Confirmar Pedido</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body">
+          <p><strong>Fecha y Hora de Entrega:</strong> {{ resumenPedido.FechaHoraEntrega }}</p>
+          <p><strong>Resumen del Pedido:</strong></p>
+          <ul>
+            <li *ngFor="let pizza of resumenPedido.pizzas">
+              {{ pizza.nombre }} - {{ pizza.NumeroPorciones }} porciones
+            </li>
+          </ul>
+          <p><strong>Total a Pagar:</strong> ${{ resumenPedido.TotalPrecio | number }}</p>
+        </div>
+  
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal">Cancelar</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="confirmarReserva()"
+            data-bs-dismiss="modal">Confirmar Reserva</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
