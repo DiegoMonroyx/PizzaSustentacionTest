@@ -1,0 +1,165 @@
+
+/* pagina principal */
+body{
+    background-image: url('https://cdn.pixabay.com/photo/2020/03/21/02/26/pizza-4952508_960_720.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #FFFFFF;
+    font-family:sans-serif;
+    width: 100%;
+    min-height: 100vh;
+
+
+   
+ }
+ 
+ main{
+  height:  100%;
+ }
+ .mt-7 {
+   margin-top: 11.1rem; /* paginas boostrap modficacion */
+ }
+ #ELtitulo{
+    margin-left: 10%;
+    color: white;
+    font-family: sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    
+ }
+ .nav-itemv{
+   color: white;
+ }
+#navam{
+   color: white;
+   
+}
+
+#bueno{
+   height: 100%;
+}
+#bueno1{
+   height: 100%;
+}
+#imagencarru{
+   height: 100%;
+}
+
+#carouselExampleIndicators{
+   overflow: hidden;
+   border-radius: 5px;
+   height: 65%;
+}
+
+.artDescripcion{
+   background-color: black;
+   width: 74%;
+   height: 600px;
+   margin-top: 3em;
+   border-radius: 5px;
+}
+.nav-item:hover{
+     background-color: #1a721b;
+     margin-right: 10px;
+     border-radius: 10px;
+}
+/* css Orden de pizza--------------------------------------------------------------*/
+
+.mt-mr1{
+   margin-top: 10rem;
+}
+
+#contenedorOrden{
+   width: 1200px;
+   height: 100%;
+   margin: 40px auto;
+   border-radius: 5px;
+   
+}
+#cartas{
+   width:
+   1100px;
+}
+
+
+
+#selector{
+   width: 150px;
+}
+/* pagina 3 inicio session*/
+.ms-y{
+    margin-left: 95px;
+}
+
+#formulario{
+   flex-direction: column;
+   max-width: 363px;
+   min-width: 360px;
+   margin-top: 100px;
+   height: 400px;
+   width: 25%;
+   border-radius: 4px;
+   box-shadow: 1px 10px 10px rgb(0,0,0,4.10);
+}
+#formularioInico{
+   width: 283px;
+}
+/* registro*/
+.ms-d{
+   margin-left: 250px;
+}
+#formulario1{
+   flex-direction: column;
+   max-width: 653px;
+   min-width: 300px;
+   min-height: 300px;
+   padding: 0 20px;
+   margin-top: 100px;
+ 
+   width: 50%;
+   border-radius: 5px;
+   box-shadow: 1px 10px 10px rgb(0,0,0,4.10);
+}
+#formulariocam{
+   height: 90%;
+}
+
+#elhover:hover{
+   background-color: #155c16;
+}
+
+/* Aministra*/
+#succes{
+   background-color: #239227;
+}
+#form-busca{
+   display: flex;
+   flex-direction: column;
+   justify-content:flex-end;
+   align-items:center;
+
+}
+#mortorbusq{
+   width: 100%;
+   padding: 10px 40px 10px 20px;
+   border: 2px solid #98b7f7;
+   border-radius: 25px;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   outline: none;
+}
+#mortorbusq:hover{
+   outline:#1c55c9;
+   box-shadow: 0px 0px 5px rgb(61, 114, 228);
+   border: 2px solid #1c55c9;
+}
+
+footer{
+   margin-top:auto;
+   
+   }
+   @media (max-height: 772px) {
+      #mainadmin{
+         height: 100vh;
+       }
+    }

@@ -1,0 +1,56 @@
+services:
+  pizzapaisa-db:
+    image: diegojuan1/pizzapaisa-db:2.2
+    restart: always
+    environment:
+      MYSQL_DATABASE: pizzapaisa
+      MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - pizzapaisa-net
+
+
+  pizzapaisa-backend:
+    image: diegojuan1/pizzapaisa-backend:2.0
+    restart: always
+    environment:
+      DB_HOST: pizzapaisa-db
+      DB_DATABASE: pizzapaisa
+      DB_USERNAME: root
+      DB_PASSWORD: 123456
+    ports:
+      - "8000:8000"
+    networks:
+      - pizzapaisa-net
+
+  pizzapaisa-frontend:
+    image: diegojuan1/pizzapaisa-frontend:1.0.7
+    restart: always
+    ports:
+      - "4200:4200"
+    depends_on:
+      - pizzapaisa-backend
+    networks:
+      - pizzapaisa-net
+
+  pizzapaisa-php:
+    image: diegojuan1/pizzapaisa-php:1.0.0
+    ports:
+      - "8080:80"
+    restart:
+      always
+    networks:
+      - pizzapaisa-net
+    depends_on:
+      - pizzapaisa-db
+
+volumes:
+  mysql_data:
+
+
+networks:
+  pizzapaisa-net:
+    driver: bridge
