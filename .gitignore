@@ -1,28 +1,57 @@
+# =====================
 # Laravel & PHP (en subcarpeta)
+# =====================
 Laravel/pizzaPaisaAP/vendor/
-Laravel/pizzaPaisaAP/public
+Laravel/pizzaPaisaAP/public/
 Laravel/pizzaPaisaAP/storage/
 Laravel/pizzaPaisaAP/storage/*.key
 Laravel/pizzaPaisaAP/.env
+Laravel/pizzaPaisaAP/.phpunit.result.cache
 
+# =====================
 # Archivos sensibles globales
+# =====================
 .env
 .env.backup
 .env.production
 auth.json
 
+# =====================
 # Node (Angular o Laravel Mix)
+# =====================
 node_modules/
 public/build/
 public/hot/
 npm-debug.log
 yarn-error.log
+*.tsbuildinfo
 
+# =====================
+# Angular/Vite específicos
+# =====================
+.angular/
+dist/
+out-tsc/
+.tmp/
+**/.angular/cache/
+**/vite/
+
+# =====================
 # IDEs y herramientas de desarrollo
+# =====================
 .idea/
-.vscode/
+.vscode/*
+!.vscode/extensions.json
 .fleet/
 
+# =====================
 # Homestead (si lo usas)
+# =====================
 Homestead.yaml
 Homestead.json
+
+# =====================
+# Otros archivos innecesarios
+# =====================
+.DS_Store
+Thumbs.db
