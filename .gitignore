@@ -1,27 +1,26 @@
-# Laravel & PHP
-/vendor
-/public/storage
-/storage/*.key
-/.phpunit.cache
-.phpunit.result.cache
+# Laravel & PHP (en subcarpeta)
+Laravel/pizzaPaisaAP/vendor/
+Laravel/pizzaPaisaAP/public/storage/
+Laravel/pizzaPaisaAP/storage/*.key
+Laravel/pizzaPaisaAP/.env
 
-# Archivos sensibles
+# Archivos sensibles globales
 .env
 .env.backup
 .env.production
 auth.json
 
-# Node (Angular / Laravel Mix)
-/node_modules
-/public/build
-/public/hot
+# Node (Angular o Laravel Mix)
+node_modules/
+public/build/
+public/hot/
 npm-debug.log
 yarn-error.log
 
-# IDEs y herramientas
-/.idea
-/.vscode
-/.fleet
+# IDEs y herramientas de desarrollo
+.idea/
+.vscode/
+.fleet/
 
 # Homestead (si lo usas)
 Homestead.yaml
