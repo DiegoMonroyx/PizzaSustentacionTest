@@ -81,7 +81,7 @@ class SaborIngrediente
         $stmt->close();
     }
 
-    function eliminar()
+    public function eliminar()
     {
         try {
             $c = new Conexion();
