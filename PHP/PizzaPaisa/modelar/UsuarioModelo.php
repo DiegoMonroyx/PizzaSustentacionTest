@@ -1,126 +1,142 @@
 <?php
 
-    class Usuarios{
+class Usuarios
+{
+    public $UsuarioDocumento;
+    public $UsuarioTelefono;
+    public $Contrasena;
+    public $Correo;
+    public $UsuarioPrimerNombre;
+    public $UsuarioApellido;
+    public $idTipoDocumento;
+    public $idTipoUsuario;
 
-		
+    function agregar()
+    {
+        $conet = new Conexion();
+        $c = $conet->conectando();
 
-                    public $UsuarioDocumento;
+        // Verifica si ya existe el usuario (consulta preparada)
+        $query = "SELECT * FROM usuario WHERE UsuarioDocumento = ?";
+        $stmt = $c->prepare($query);
+        $stmt->bind_param("s", $this->UsuarioDocumento);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
 
-				    public $UsuarioTelefono;
+        if ($resultado->fetch_array()) {
+            echo '<script>Swal.fire({
+                position: "top",
+                icon: "info",
+                title: "El Registro ya Existe en el Sistema",
+                showConfirmButton: false,
+                timer: 3000
+            });</script>';
+        } else {
+            $ContrasenaHash = password_hash($this->Contrasena, PASSWORD_DEFAULT);
+            $insertar = "INSERT INTO usuario (UsuarioDocumento, UsuarioTelefono, Contrasena, Correo, UsuarioPrimerNombre, UsuarioApellido, idTipoDocumento, idTipoUsuario)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt_insert = $c->prepare($insertar);
+            $stmt_insert->bind_param(
+                "ssssssss",
+                $this->UsuarioDocumento,
+                $this->UsuarioTelefono,
+                $ContrasenaHash,
+                $this->Correo,
+                $this->UsuarioPrimerNombre,
+                $this->UsuarioApellido,
+                $this->idTipoDocumento,
+                $this->idTipoUsuario
+            );
+            $stmt_insert->execute();
+            $stmt_insert->close();
 
-                    public $Contrasena;
+            echo '<script>Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "El Registro fue agregado en el Sistema",
+                showConfirmButton: false,
+                timer: 3000
+            });</script>';
+        }
+        $stmt->close();
+    }
 
-                    public $Correo;
+    function modificar()
+    {
+        $c = new Conexion();
+        $cone = $c->conectando();
 
-                    public $UsuarioPrimerNombre;
+        $sql = "SELECT * FROM usuario WHERE UsuarioDocumento = ?";
+        $stmt = $cone->prepare($sql);
+        $stmt->bind_param("s", $this->UsuarioDocumento);
+        $stmt->execute();
+        $r = $stmt->get_result();
 
-                    public $UsuarioApellido;
+        if (!$r->fetch_array()) {
+            echo "<script> alert('El Usuario no Existe en el Sistema')</script>";
+        } else {
+            $id = "UPDATE usuario SET 
+                        UsuarioTelefono = ?,
+                        Correo = ?,
+                        UsuarioPrimerNombre = ?,
+                        UsuarioApellido = ?,
+                        idTipoDocumento = ?,
+                        idTipoUsuario = ?
+                    WHERE UsuarioDocumento = ?";
+            $stmt_update = $cone->prepare($id);
+            $stmt_update->bind_param(
+                "sssssss",
+                $this->UsuarioTelefono,
+                $this->Correo,
+                $this->UsuarioPrimerNombre,
+                $this->UsuarioApellido,
+                $this->idTipoDocumento,
+                $this->idTipoUsuario,
+                $this->UsuarioDocumento
+            );
+            $stmt_update->execute();
+            $stmt_update->close();
 
-                    public $idTipoDocumento;
-                     
-                    public $idTipoUsuario;
+            echo '<script>Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "El Registro Fue Actualizado en el Sistema",
+                showConfirmButton: false,
+                timer: 3000
+            });</script>';
+        }
+        $stmt->close();
+    }
 
-					
-                    function agregar(){
-                                        $conet = new Conexion();
-                                        $c = $conet->conectando();
-                                        $query = "select * from usuario where UsuarioDocumento = '$this->UsuarioDocumento'";
-                                        $ejecuta = mysqli_query($c, $query);
-                                        if(mysqli_fetch_array($ejecuta)){
-											echo '<script>	Swal.fire({
-												position: "top",
-												icon: "info",
-												title: "El Registro ya Existe en el Sistema",
-												showConfirmButton: false,
-												timer: 3000
-											  });';
-                                        }else{
-										   $Contrasena = password_hash( $this ->Contrasena, PASSWORD_DEFAULT);	
-                                           $insertar = "insert into usuario values(
-                                                                                    '$this->UsuarioDocumento',
-																					'$this->UsuarioTelefono',
-																					'$Contrasena',
-																					'$this->Correo',
-                                                                                    '$this->UsuarioPrimerNombre',
-																					'$this->UsuarioApellido',                                                                                                                                                                                
-                                                                                    '$this->idTipoDocumento',
-                                                                                    '$this->idTipoUsuario'
-                                           )";
-                                           echo $insertar;
-                                           mysqli_query($c,$insertar);
-                                           echo '<script>	</script>';
-                                            
-                                        }
+    function eliminar()
+    {
+        try {
+            $c = new Conexion();
+            $cone = $c->conectando();
 
-                    }
+            $sql = "DELETE FROM usuario WHERE UsuarioDocumento = ?";
+            $stmt = $cone->prepare($sql);
+            $stmt->bind_param("s", $this->UsuarioDocumento);
+            $stmt->execute();
+            $stmt->close();
 
-                    function modificar(){
-                                    $c = new Conexion();
-								    $cone = $c->conectando();
-									$sql = "select * from usuario where UsuarioDocumento ='$this->UsuarioDocumento'";
-									$r = mysqli_query($cone,$sql);
-									if(!mysqli_fetch_array($r))
-																{
-																	echo "<script> alert('El Usuario ya Existe en el Sistema')</scrip>";
-																}
-																else
-																	{
-																	$id = "update usuario set 
-																	UsuarioDocumento ='$this->UsuarioDocumento',
-																	UsuarioTelefono = '$this->UsuarioTelefono',
-																	Correo = '$this->Correo',
-																	UsuarioPrimerNombre = '$this->UsuarioPrimerNombre',
-																	UsuarioApellido = '$this->UsuarioApellido',
-																	idTipoDocumento = '$this->idTipoDocumento',
-																	idTipoUsuario = '$this->idTipoUsuario' where UsuarioDocumento ='$this->UsuarioDocumento'";
-																	mysqli_query($cone,$id);
-																	//echo $id;
-																	echo '<script>	Swal.fire({
-																		position: "top",
-																		icon: "success",
-																		title: "El Registro Fue Actualizado en el Sistema",
-																		showConfirmButton: false,
-																		timer: 3000
-																	  });</script>';			
-																	
-																		
-																}
-				}
+            echo '<script>Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "El Registro Fue Eliminado del Sistema",
+                showConfirmButton: false,
+                timer: 3000
+            });</script>';
+        } catch (Exception $e) {
+            echo '<script>Swal.fire({
+                position: "top",
+                icon: "warning",
+                title: "El Registro no se Puede Eliminar Porqué Tiene Datos Relacionados",
+                showConfirmButton: false,
+                timer: 3000
+            });</script>';
+        }
+    }
+}
 
-                     
-                    
-                    function eliminar(){
-									try{   
-									$c = new Conexion();
-									$cone = $c->conectando();
-									$sql= "delete from usuario where UsuarioDocumento='$this->UsuarioDocumento'";
-									mysqli_query($cone,$sql);
-								    echo $sql;
-									echo '<script>	Swal.fire({
-										position: "top",
-										icon: "success",
-										title: "El Registro Fue Eliminado del Sistema",
-										showConfirmButton: false,
-										timer: 3000
-									  });</script>';
-									
-
-									}catch(Exception $e){
-									
-																	
-										echo'<script> Swal.fire({
-											position: "top",
-											icon: "warning",
-											title: "El Registro no se Puede Eliminar Porqué Tiene Datos Relacionados",
-											showConfirmButton: false,
-											timer: 3000
-										  });</script>';
-											
-									}
-									
-								}
-								
-      }
-
-	  
 ?><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

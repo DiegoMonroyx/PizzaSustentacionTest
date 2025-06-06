@@ -1,23 +1,32 @@
 <?php
-  class tipodocumento{
+class tipodocumento {
     public $idTipoDocumento;
     public $tipoDocumento;
 
-
-    function modificar(){
-
+    function modificar() {
         $c = new Conexion();
         $cone = $c->conectando();
-        $sql = "select * from tipodocumento where idTipoDocumento = '$this->idTipoDocumento'";
-        $r = mysqli_query($cone, $sql);
-        if (!mysqli_fetch_array($r)) {
-            echo "<script> alert ('No se puede modificar el tipo de usuario') </script>";
+
+        // Consulta preparada para evitar inyección SQL
+        $sql = "SELECT * FROM tipodocumento WHERE idTipoDocumento = ?";
+        $stmt = $cone->prepare($sql);
+        $stmt->bind_param("s", $this->idTipoDocumento);
+        $stmt->execute();
+        $r = $stmt->get_result();
+
+        if (!$r->fetch_array()) {
+            echo "<script> alert('No se puede modificar el tipo de usuario') </script>";
         } else {
-          $id = "update tipodocumento set 
-            idTipoDocumento = '$this->idTipoDocumento',
-            tipoDocumento = '$this->tipoDocumento'
-            where idTipoDocumento = '$this->idTipoDocumento'";
-            mysqli_query($cone, $id);
+            // Actualizar usando consulta preparada
+            $id = "UPDATE tipodocumento SET 
+                idTipoDocumento = ?, 
+                tipoDocumento = ?
+                WHERE idTipoDocumento = ?";
+            $stmt_update = $cone->prepare($id);
+            $stmt_update->bind_param("sss", $this->idTipoDocumento, $this->tipoDocumento, $this->idTipoDocumento);
+            $stmt_update->execute();
+            $stmt_update->close();
+
             echo '<script> Swal.fire({
                 position: "top",
                 icon: "success",
@@ -26,9 +35,7 @@
                 timer: 3000}); 
                 </script>';
         }
+        $stmt->close();
     }
-
-  }
-
-
+}
 ?><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -1,93 +1,116 @@
 <?php
 
-    class SaborIngrediente{
+class SaborIngrediente
+{
+    public $idSabor;
+    public $idIngrediente;
+    public $idIngredientes;
+    public $cantidadKg;
 
-                    public $idSabor;
-                    public $idIngrediente;
-                    public $idIngredientes;
-                    public $Cantidadkg;
-                    
+    function agregar()
+    {
+        $conet = new Conexion();
+        $c = $conet->conectando();
 
-                    function agregar(){
-                        $conet = new Conexion();
-                        $c = $conet->conectando();
-                        $query = "select * from saboringrediente where idSabor = '$this->idSabor' and idIngrediente = '$this->idIngrediente'";
-                        $ejecuta = mysqli_query($c, $query);
-                        if (!mysqli_fetch_array($ejecuta)) {
-                            $insertar = "insert into saboringrediente values(
-                                '$this->idSabor',
-                                '$this->idIngrediente',
-                                '$this->Cantidadkg' 
-                            )";
-                            echo $insertar;
-                            mysqli_query($c, $insertar);
-                            echo '<script> Swal.fire({
-                                    position: "top",
-                                    icon: "info",
-                                    title: "El Registro ya Existe en el Sistema",
-                                    showConfirmButton: false,
-                                    timer: 3000
-                                  }); </script>';
-                        } else {
-                            
-                            echo '<script> Swal.fire({
-                                    position: "top",
-                                    icon: "success",
-                                    title: "El Registro Fue Agregado al Sistema",
-                                    showConfirmButton: false,
-                                    timer: 3000
-                                  }); </script>';
-                        }
-                    }
+        // Consulta preparada para evitar inyección SQL
+        $query = "SELECT * FROM saboringrediente WHERE idSabor = ? AND idIngrediente = ?";
+        $stmt = $c->prepare($query);
+        $stmt->bind_param("ss", $this->idSabor, $this->idIngrediente);
+        $stmt->execute();
+        $ejecuta = $stmt->get_result();
 
-                    function modificar(){
-                        $c = new Conexion();
-                        $cone = $c->conectando();
-                        $sql = "select * from saboringrediente where idSabor ='$this->idSabor' and idIngrediente = '$this->idIngrediente'";
-                        $r = mysqli_query($cone, $sql);
-                        if (mysqli_fetch_array($r)) {
-                            echo "<script> alert('El Usuario no Existe en el Sistema') </script>";
-                        } else {
-                            $id = "update saboringrediente set 
-                                        idIngrediente = '$this->idIngrediente',
-                                        Cantidadkg = '$this->Cantidadkg'
-                                    where idSabor = '$this->idSabor' and idIngrediente = '$this->idIngredientes'";
-                            mysqli_query($cone, $id);
-                            echo $id;
-                            echo '<script> Swal.fire({
-                                    position: "top",
-                                    icon: "success",
-                                    title: "El Registro Fue Actualizado en el Sistema",
-                                    showConfirmButton: false,
-                                    timer: 3000
-                                  }); </script>';
-                        }
-                    }
+        if (!$ejecuta->fetch_array()) {
+            $insertar = "INSERT INTO saboringrediente (idSabor, idIngrediente, Cantidadkg) VALUES (?, ?, ?)";
+            $stmt_insert = $c->prepare($insertar);
+            $stmt_insert->bind_param("sss", $this->idSabor, $this->idIngrediente, $this->cantidadKg);
+            $stmt_insert->execute();
+            $stmt_insert->close();
 
-                    function eliminar(){
-                        try {   
-                            $c = new Conexion();
-                            $cone = $c->conectando();
-                            $sql = "delete from saboringrediente where idSabor = '$this->idSabor' and idIngrediente = '$this->idIngrediente'";
-                            mysqli_query($cone, $sql);
-                            echo $sql;
-                            echo '<script> Swal.fire({
-                                    position: "top",
-                                    icon: "success",
-                                    title: "El Registro Fue Eliminado del Sistema",
-                                    showConfirmButton: false,
-                                    timer: 3000
-                                  }); </script>';
-                        } catch (Exception $e) {
-                            echo '<script> Swal.fire({
-                                    position: "top",
-                                    icon: "warning",
-                                    title: "El Registro no se Puede Eliminar Porque Tiene Datos Relacionados",
-                                    showConfirmButton: false,
-                                    timer: 3000
-                                  }); </script>';
-                        }
-                    }
+            echo '<script> Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "El Registro Fue Agregado al Sistema",
+                showConfirmButton: false,
+                timer: 3000
+            }); </script>';
+        } else {
+            echo '<script> Swal.fire({
+                position: "top",
+                icon: "info",
+                title: "El Registro ya Existe en el Sistema",
+                showConfirmButton: false,
+                timer: 3000
+            }); </script>';
+        }
+        $stmt->close();
     }
+
+    function modificar()
+    {
+        $c = new Conexion();
+        $cone = $c->conectando();
+
+        // Consulta preparada para verificar existencia
+        $sql = "SELECT * FROM saboringrediente WHERE idSabor = ? AND idIngrediente = ?";
+        $stmt = $cone->prepare($sql);
+        $stmt->bind_param("ss", $this->idSabor, $this->idIngredientes);
+        $stmt->execute();
+        $r = $stmt->get_result();
+
+        if ($r->fetch_array()) {
+            // Actualización usando consulta preparada
+            $id = "UPDATE saboringrediente SET 
+                        idIngrediente = ?, 
+                        Cantidadkg = ?
+                    WHERE idSabor = ? AND idIngrediente = ?";
+            $stmt_update = $cone->prepare($id);
+            $stmt_update->bind_param("ssss", $this->idIngrediente, $this->cantidadKg, $this->idSabor, $this->idIngredientes);
+            $stmt_update->execute();
+            $stmt_update->close();
+
+            echo '<script> Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "El Registro Fue Actualizado en el Sistema",
+                showConfirmButton: false,
+                timer: 3000
+            }); </script>';
+        } else {
+            echo "<script> alert('El Usuario no Existe en el Sistema') </script>";
+        }
+        $stmt->close();
+    }
+
+    function eliminar()
+    {
+        try {
+            $c = new Conexion();
+            $cone = $c->conectando();
+
+            // Eliminación usando consulta preparada
+            $sql = "DELETE FROM saboringrediente WHERE idSabor = ? AND idIngrediente = ?";
+            $stmt = $cone->prepare($sql);
+            $stmt->bind_param("ss", $this->idSabor, $this->idIngrediente);
+            $stmt->execute();
+            $stmt->close();
+
+            echo '<script> Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "El Registro Fue Eliminado del Sistema",
+                showConfirmButton: false,
+                timer: 3000
+            }); </script>';
+        } catch (Exception $e) {
+            echo '<script> Swal.fire({
+                position: "top",
+                icon: "warning",
+                title: "El Registro no se Puede Eliminar Porque Tiene Datos Relacionados",
+                showConfirmButton: false,
+                timer: 3000
+            }); </script>';
+        }
+    }
+}
 
 ?><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
