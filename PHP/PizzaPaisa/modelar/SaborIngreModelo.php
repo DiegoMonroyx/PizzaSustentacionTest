@@ -7,7 +7,7 @@ class SaborIngrediente
     public $idIngredientes;
     public $cantidadKg;
 
-    function agregar()
+    public function agregar()
     {
         $conet = new Conexion();
         $c = $conet->conectando();
@@ -45,7 +45,7 @@ class SaborIngrediente
         $stmt->close();
     }
 
-    function modificar()
+    public function modificar()
     {
         $c = new Conexion();
         $cone = $c->conectando();

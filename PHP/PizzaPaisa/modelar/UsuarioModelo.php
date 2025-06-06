@@ -11,7 +11,7 @@ class Usuarios
     public $idTipoDocumento;
     public $idTipoUsuario;
 
-    function agregar()
+    public function agregar()
     {
         $conet = new Conexion();
         $c = $conet->conectando();
@@ -61,7 +61,7 @@ class Usuarios
         $stmt->close();
     }
 
-    function modificar()
+    public function modificar()
     {
         $c = new Conexion();
         $cone = $c->conectando();
@@ -108,7 +108,7 @@ class Usuarios
         $stmt->close();
     }
 
-    function eliminar()
+    public function eliminar()
     {
         try {
             $c = new Conexion();

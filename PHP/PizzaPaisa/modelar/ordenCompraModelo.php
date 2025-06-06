@@ -6,7 +6,7 @@ class OrdenDeCompra
     public $fechaPedido;
     public $usuarioDocumento;
 
-    function agregar()
+    public function agregar()
     {
         $conet = new Conexion();
         $c = $conet->conectando();
@@ -35,7 +35,7 @@ class OrdenDeCompra
         $stmt->close();
     }
 
-    function modificar()
+    public function modificar()
     {
         $c = new Conexion();
         $cone = $c->conectando();
@@ -64,7 +64,7 @@ class OrdenDeCompra
         $stmt->close();
     }
 
-    function eliminar()
+    public function eliminar()
     {
         try {
             $c = new Conexion();
