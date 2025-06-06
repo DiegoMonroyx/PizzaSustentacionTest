@@ -1,46 +1,33 @@
 <?php
 
-//include('../../modelar/ReservaModelo.php');
-require_once(__DIR__ . "/../modelar/ReservaModelo.php");
-
+require_once __DIR__ . "/../modelar/ReservaModelo.php";
 
 $obj = new Reserva();
-if($_POST){
-}
 
 if(isset($_POST['guardar'])){
-    
     $obj->idPedido = $_POST['idPedido'];
-    $obj->FechaHoraRealizacio = $_POST['FechaHoraRealizacio'];
-    $obj->Entregada = $_POST['Entregada'];
-    $obj->FechaHoraEntrega = $_POST['FechaHoraEntrega'];
-    $obj->PrecioTotal = $_POST['PrecioTotal'];
-    $obj->UsuarioDocumento = $_POST['UsuarioDocumento'];
+    $obj->fechaHoraRealizacio = $_POST['FechaHoraRealizacio'];
+    $obj->entregada = $_POST['Entregada'];
+    $obj->fechaHoraEntrega = $_POST['FechaHoraEntrega'];
+    $obj->precioTotal = $_POST['PrecioTotal'];
+    $obj->usuarioDocumento = $_POST['UsuarioDocumento'];
     $obj->agregar();
 }
 
 if(isset($_POST['modifica'])){
-
-    
     $obj->idPedido = $_POST['idPedido'];
-    $obj->FechaHoraRealizacio = $_POST['FechaHoraRealizacio'];
-    $obj->Entregada = $_POST['Entregada'];
-    $obj->FechaHoraEntrega = $_POST['FechaHoraEntrega'];
-    $obj->PrecioTotal = $_POST['PrecioTotal'];
-    $obj->UsuarioDocumento = $_POST['UsuarioDocumento'];
+    $obj->fechaHoraRealizacio = $_POST['FechaHoraRealizacio'];
+    $obj->entregada = $_POST['Entregada'];
+    $obj->fechaHoraEntrega = $_POST['FechaHoraEntrega'];
+    $obj->precioTotal = $_POST['PrecioTotal'];
+    $obj->usuarioDocumento = $_POST['UsuarioDocumento'];
     $obj->modificar();
-    
 }
 
 if (isset($_POST['idPedido']) && isset($_POST['entregada'])) {
-    $idPedido = $_POST['idPedido'];
-    $entregada = $_POST['entregada'];
+    $obj->idPedido = $_POST['idPedido'];
+    $obj->entregada = $_POST['entregada'];
 
-    // Asignar valores al objeto
-    $obj->idPedido = $idPedido;
-    $obj->Entregada = $entregada;
-
-    // Ejecutar la actualización
     if ($obj->modificarr()) {
         echo 'success';
     } else {
@@ -50,47 +37,43 @@ if (isset($_POST['idPedido']) && isset($_POST['entregada'])) {
 
 if(isset($_POST['elimina'])){
     $obj->idPedido = $_POST['idPedido'];
-    
     $obj->eliminar();
 }
 
 $cone  = new Conexion();
-$c=$cone->conectando();
-$sql1="select count(*) as totalRegistro from reserva";
-$ejecuta1=mysqli_query($c,$sql1);
+$c = $cone->conectando();
+$sql1 = "SELECT count(*) as totalRegistro FROM reserva";
+$ejecuta1 = mysqli_query($c, $sql1);
 $res1 = mysqli_fetch_array($ejecuta1);
 $totalRegistros = $res1['totalRegistro'];
 $maximoRegistros = 6;
- if(empty($_GET['pagina'])){
-     $pagina=1;
- }else{
-     $pagina=$_GET['pagina'];
- }
- $desde = ($pagina-1)*$maximoRegistros;
- $totalPaginas=ceil($totalRegistros/$maximoRegistros);
+
+if(empty($_GET['pagina'])){
+    $pagina = 1;
+} else {
+    $pagina = $_GET['pagina'];
+}
+$desde = ($pagina - 1) * $maximoRegistros;
+$totalPaginas = ceil($totalRegistros / $maximoRegistros);
+
 if(isset($_POST['buscar'])){
     $obj->idPedido = $_POST['idPedido'];
-   
 
-  $sql2="select * from reserva where idPedido LIKE '%$obj->idPedido%' limit $desde,$maximoRegistros ";
-  $ejecuta=mysqli_query($c,$sql2);
-  $res = mysqli_fetch_array($ejecuta);
-  }else{
-         $sql2="select r.idPedido, r.created_at, r.Entregada, r.FechaHoraEntrega, r.PrecioTotal, 
-        u.UsuarioDocumento, u.UsuarioPrimerNombre, u.UsuarioApellido from reserva r
-        inner join usuario u ON r.UsuarioDocumento = u.UsuarioDocumento
-        ORDER BY r.idPedido DESC";
-         $ejecuta=mysqli_query($c,$sql2);
-         $res = mysqli_fetch_array($ejecuta);
-  }
-
-  if(isset($_POST['listar'])){
-       
-    
-    
-
-  }
-
-
-
+    // Consulta preparada para evitar inyección SQL
+    $sql2 = "SELECT * FROM reserva WHERE idPedido LIKE ? LIMIT ?, ?";
+    $stmt = $c->prepare($sql2);
+    $likeIdPedido = "%" . $obj->idPedido . "%";
+    $stmt->bind_param("sii", $likeIdPedido, $desde, $maximoRegistros);
+    $stmt->execute();
+    $ejecuta = $stmt->get_result();
+    $res = $ejecuta->fetch_array();
+    $stmt->close();
+} else {
+    $sql2 = "SELECT r.idPedido, r.created_at, r.Entregada, r.FechaHoraEntrega, r.PrecioTotal, 
+        u.UsuarioDocumento, u.UsuarioPrimerNombre, u.UsuarioApellido FROM reserva r
+        INNER JOIN usuario u ON r.UsuarioDocumento = u.UsuarioDocumento
+        ORDER BY r.idPedido DESC LIMIT $desde, $maximoRegistros";
+    $ejecuta = mysqli_query($c, $sql2);
+    $res = mysqli_fetch_array($ejecuta);
+}
 ?>
